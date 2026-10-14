@@ -1,0 +1,45 @@
+name: Employee Portal - Staging D1 initialization
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: employee-portal-staging-d1-init
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install Wrangler CLI
+        run: npm install --prefix /tmp/cf-tools --no-save wrangler@4.129.0
+      - name: Verify target and migration files
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '5298048f-6c41-45e0-b1f3-e87cf60b81fa' apps/server/wrangler.staging.jsonc
+          for dir in packages/db/src/migrations/20*; do
+            test -f "$dir/migration.sql"
+          done
+      - name: Apply SQL migrations to staging D1 only
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          cd apps/server
+          for dir in ../../packages/db/src/migrations/20*; do
+            echo "Applying $(basename "$dir") to staging D1"
+            node /tmp/cf-tools/node_modules/wrangler/bin/wrangler.js d1 execute employee-portal-staging \
+              --remote --config wrangler.staging.jsonc --env staging \
+              --file "$dir/migration.sql"
+          done
