@@ -1,39 +1,24 @@
 import type { AppRouter } from "@store-managment-communal-web/api/routers/index";
-import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import { toast } from "sonner";
-
 export const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: (error, query) => {
-      toast.error(error.message, {
-        action: {
-          label: "retry",
-          onClick: () => {
-            query.invalidate();
-          },
-        },
-      });
-    },
-  }),
+	defaultOptions: {
+		queries: { retry: 1, staleTime: 30000 },
+		mutations: { retry: false },
+	},
 });
-
 const trpcClient = createTRPCClient<AppRouter>({
-  links: [
-    httpBatchLink({
-      url: `${process.env.NEXT_PUBLIC_SERVER_URL!.replace(/\/$/, "")}/trpc`,
-      fetch(url, options) {
-        return fetch(url, {
-          ...options,
-          credentials: "include",
-        });
-      },
-    }),
-  ],
+	links: [
+		httpBatchLink({
+			url: "/trpc",
+			fetch(url, options) {
+				return fetch(url, { ...options, credentials: "include" });
+			},
+		}),
+	],
 });
-
 export const trpc = createTRPCOptionsProxy<AppRouter>({
-  client: trpcClient,
-  queryClient,
+	client: trpcClient,
+	queryClient,
 });

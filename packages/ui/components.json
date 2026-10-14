@@ -1,24 +1,25 @@
 {
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "base-lyra",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "",
-    "css": "src/styles/globals.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "iconLibrary": "lucide",
-  "aliases": {
-    "components": "@store-managment-communal-web/ui/components",
-    "utils": "@store-managment-communal-web/ui/lib/utils",
-    "hooks": "@store-managment-communal-web/ui/hooks",
-    "lib": "@store-managment-communal-web/ui/lib",
-    "ui": "@store-managment-communal-web/ui/components"
-  },
-  "menuColor": "default",
-  "menuAccent": "subtle",
-  "registries": {}
+	"$schema": "https://ui.shadcn.com/schema.json",
+	"style": "new-york",
+	"rtl": true,
+	"rsc": true,
+	"tsx": true,
+	"tailwind": {
+		"config": "",
+		"css": "src/styles/globals.css",
+		"baseColor": "neutral",
+		"cssVariables": true,
+		"prefix": ""
+	},
+	"iconLibrary": "lucide",
+	"aliases": {
+		"components": "@store-managment-communal-web/ui/components",
+		"utils": "@store-managment-communal-web/ui/lib/utils",
+		"hooks": "@store-managment-communal-web/ui/hooks",
+		"lib": "@store-managment-communal-web/ui/lib",
+		"ui": "@store-managment-communal-web/ui/components"
+	},
+	"menuColor": "default",
+	"menuAccent": "subtle",
+	"registries": {}
 }

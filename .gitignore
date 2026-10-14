@@ -6,6 +6,7 @@ node_modules
 # Build outputs
 dist
 build
+.open-next
 *.tsbuildinfo
 
 # Generated files
@@ -16,6 +17,7 @@ local.db-*
 # Environment variables
 .env
 .env*.local
+.dev.vars*
 
 # IDEs and editors
 .vscode/*

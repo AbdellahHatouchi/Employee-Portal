@@ -1,0 +1,26 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "store-managment-communal-web-web-staging",
+	"account_id": "58691d5dbfbbdcce24303f1c3b7ee16b",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-10-14",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+	"env": {
+		"staging": {
+			"name": "store-managment-communal-web-web-staging",
+			"workers_dev": true,
+			"preview_urls": false,
+			"vars": {
+				"NEXT_PUBLIC_SERVER_URL": "https://store-managment-communal-web-api-staging.abdellahhatouchi.workers.dev"
+			},
+			"images": { "binding": "IMAGES" },
+			"services": [
+				{
+					"binding": "WORKER_SELF_REFERENCE",
+					"service": "store-managment-communal-web-web-staging"
+				}
+			]
+		}
+	}
+}

@@ -1,11 +1,12 @@
 {
-  "extends": "@store-managment-communal-web/config/tsconfig.base.json",
-  "compilerOptions": {
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
-  }
+	"extends": "@store-managment-communal-web/config/tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"types": ["node", "bun", "@cloudflare/workers-types"],
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "hono/jsx"
+	}
 }

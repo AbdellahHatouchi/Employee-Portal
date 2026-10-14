@@ -1,0 +1,32 @@
+{
+	"$schema": "../web/node_modules/wrangler/config-schema.json",
+	"name": "store-managment-communal-web-api-staging",
+	"account_id": "58691d5dbfbbdcce24303f1c3b7ee16b",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"env": {
+		"staging": {
+			"name": "store-managment-communal-web-api-staging",
+			"workers_dev": true,
+			"preview_urls": false,
+			"vars": {
+				"BETTER_AUTH_URL": "https://store-managment-communal-web-api-staging.abdellahhatouchi.workers.dev",
+				"CORS_ORIGIN": "https://store-managment-communal-web-web-staging.abdellahhatouchi.workers.dev",
+				"RESEND_FROM": "support@kuzdigital.online"
+			},
+			"secrets": {
+				"required": ["BETTER_AUTH_SECRET", "SYNC_SECRET", "RESEND_API_KEY"]
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "store-managment-communal-web-staging",
+					"database_id": "00000000-0000-0000-0000-000000000001",
+					"migrations_dir": "../../packages/db/src/migrations",
+					"migrations_pattern": "../../packages/db/src/migrations/*/migration.sql"
+				}
+			]
+		}
+	}
+}

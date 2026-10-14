@@ -1,0 +1,1 @@
+ALTER TABLE `employee_accounts` ADD `invited_at` integer;

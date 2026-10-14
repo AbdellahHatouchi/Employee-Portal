@@ -1,0 +1,19 @@
+{
+	"$schema": "../web/node_modules/wrangler/config-schema.json",
+	"name": "communal-portal-local",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"BETTER_AUTH_URL": "http://localhost:3000",
+		"CORS_ORIGIN": "http://localhost:3001"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "communal-portal-local",
+			"database_id": "00000000-0000-0000-0000-000000000001"
+		}
+	],
+	"dev": { "port": 3000 }
+}

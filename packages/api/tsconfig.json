@@ -1,6 +1,6 @@
 {
-  "extends": "@store-managment-communal-web/config/tsconfig.base.json",
-  "compilerOptions": {
-    "noEmit": true
-  }
+	"extends": "@store-managment-communal-web/config/tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true
+	}
 }

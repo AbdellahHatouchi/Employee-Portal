@@ -1,47 +1,57 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "db:generate": {
-      "cache": false,
-      "interactive": true
-    },
-    "deploy": {
-      "cache": false,
-      "interactive": true
-    },
-    "destroy": {
-      "cache": false,
-      "interactive": true
-    }
-  },
-  "globalEnv": [
-    "BETTER_AUTH_SECRET",
-    "BETTER_AUTH_URL",
-    "CI",
-    "CORS_ORIGIN",
-    "NEXT_PUBLIC_SERVER_URL",
-    "NODE_ENV",
-    "VERCEL",
-    "VERCEL_ENV",
-    "VERCEL_PROJECT_PRODUCTION_URL",
-    "VERCEL_URL",
-    "_VARLOCK_ENV_KEY"
-  ],
-  "globalDependencies": [".env*", "apps/*/.env*", "packages/*/.env*"]
+	"$schema": "https://turbo.build/schema.json",
+	"ui": "tui",
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", ".env*"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+		},
+		"lint": {
+			"dependsOn": ["^lint"]
+		},
+		"check-types": {
+			"dependsOn": ["^check-types"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:generate": {
+			"cache": false,
+			"interactive": true
+		},
+		"deploy": {
+			"cache": false,
+			"interactive": true
+		},
+		"destroy": {
+			"cache": false,
+			"interactive": true
+		}
+	},
+	"globalEnv": [
+		"BETTER_AUTH_SECRET",
+		"BETTER_AUTH_URL",
+		"CI",
+		"CORS_ORIGIN",
+		"RESEND_API_KEY",
+		"RESEND_FROM",
+		"SYNC_SECRET",
+		"NEXT_PUBLIC_SERVER_URL",
+		"NODE_ENV",
+		"VERCEL",
+		"VERCEL_ENV",
+		"VERCEL_PROJECT_PRODUCTION_URL",
+		"VERCEL_URL",
+		"_VARLOCK_ENV_KEY"
+	],
+	"globalDependencies": [".env*", "apps/*/.env*", "packages/*/.env*"],
+	"globalPassThroughEnv": [
+		"PORTAL_TEST_ORIGIN",
+		"PORTAL_TEST_SECRET",
+		"PORTAL_TEST_CONFIG",
+		"PORTAL_TEST_PERSIST",
+		"PORTAL_TEST_TEMP"
+	]
 }

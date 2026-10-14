@@ -1,11 +1,21 @@
 import { createAuth as createConfiguredAuth } from "@store-managment-communal-web/auth";
-import { type Database, createDb } from "@store-managment-communal-web/db";
+import { createDb, type Database } from "@store-managment-communal-web/db";
 
 import { ENV } from "./env.server";
 
 export function getDb(): Database {
-  return createDb(ENV);
+	return createDb(ENV);
 }
-export async function createAuth(database?: Database) {
-  return createConfiguredAuth(ENV, database ?? (await getDb()));
+export async function createAuth(
+	database?: Database,
+	backgroundTask?: (task: Promise<unknown>) => void,
+	mailIdempotencyKey?: string,
+) {
+	return createConfiguredAuth(
+		ENV,
+		database ?? (await getDb()),
+		[],
+		backgroundTask,
+		mailIdempotencyKey,
+	);
 }

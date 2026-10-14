@@ -1,4 +1,4 @@
 {
-  "extends": "@store-managment-communal-web/config/tsconfig.base.json",
-  "include": ["alchemy.run.ts"]
+	"extends": "@store-managment-communal-web/config/tsconfig.base.json",
+	"include": ["alchemy.run.ts"]
 }
