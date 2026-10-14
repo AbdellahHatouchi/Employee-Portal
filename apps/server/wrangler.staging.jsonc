@@ -21,8 +21,8 @@
 			"d1_databases": [
 				{
 					"binding": "DB",
-					"database_name": "store-managment-communal-web-staging",
-					"database_id": "00000000-0000-0000-0000-000000000001",
+					"database_name": "employee-portal-staging",
+					"database_id": "5298048f-6c41-45e0-b1f3-e87cf60b81fa",
 					"migrations_dir": "../../packages/db/src/migrations",
 					"migrations_pattern": "../../packages/db/src/migrations/*/migration.sql"
 				}
