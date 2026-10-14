@@ -1,0 +1,41 @@
+name: Employee Portal - Staging preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Validate staging configuration (no deployment)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate D1 staging binding
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const file = 'apps/server/wrangler.staging.jsonc';
+          const raw = fs.readFileSync(file, 'utf8');
+          const expectedName = 'employee-portal-staging';
+          const expectedId = '5298048f-6c41-45e0-b1f3-e87cf60b81fa';
+          for (const [label, value] of [['name', expectedName], ['ID', expectedId]]) {
+            if (!raw.includes(value)) throw new Error('Unexpected staging D1 ' + label);
+          }
+          if (raw.includes('00000000-0000-0000-0000-000000000001')) {
+            throw new Error('Placeholder D1 ID remains');
+          }
+          console.log('Staging D1 binding matches expected database.');
+          NODE
+      - name: Inventory migration files without executing them
+        shell: bash
+        run: |
+          if [ ! -d packages/db/src/migrations ]; then
+            echo "::warning::No migrations directory found; do not deploy until schema initialization is reviewed."
+          else
+            find packages/db/src/migrations -type f | sort
+          fi
+          echo "No database changes or Cloudflare deployments performed."
