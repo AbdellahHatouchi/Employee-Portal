@@ -20,3 +20,7 @@ Validation before deployment: 12 focused access/invitation tests passed, 44 asse
 ## Desktop connection boundary
 
 The operational desktop remains configured for staging and its automatic sync remains disabled. Creating production Workers does not change local SQLite, publish all employees, issue invitations or migrate request mappings. Because production is empty and existing desktop receipts refer to staging, endpoint switching and first publication require the existing reconciliation/scope protections. Do not copy cloud test records or force local receipt/stock changes to populate production. No full stock/import/delivery/offline production-readiness claim is made from this deployment task.
+
+## Completed deployment evidence
+
+Both deployment workflows completed successfully, including live smoke checks. See `CLOUDFLARE_PRODUCTION_DEPLOYMENT_REPORT.md` for run links, exact versions, database counts and verification limits.
