@@ -1,0 +1,31 @@
+{
+	"$schema": "../web/node_modules/wrangler/config-schema.json",
+	"name": "cfs-empoyee-portial-api",
+	"account_id": "58691d5dbfbbdcce24303f1c3b7ee16b",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"env": {
+		"production": {
+			"name": "cfs-empoyee-portial-api",
+			"workers_dev": true,
+			"preview_urls": false,
+			"vars": {
+				"BETTER_AUTH_URL": "https://cfs-empoyee-portial-api.abdellahhatouchi.workers.dev",
+				"CORS_ORIGIN": "https://cfs-empoyee-portial.abdellahhatouchi.workers.dev",
+				"RESEND_FROM": "support@kuzdigital.online"
+			},
+			"secrets": {
+				"required": ["BETTER_AUTH_SECRET", "SYNC_SECRET", "RESEND_API_KEY"]
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "cfs-empoyee-portial-production",
+					"database_id": "5cfb10b4-6c4d-436d-ae0e-f101980daac9",
+					"migrations_dir": ".production-migrations"
+				}
+			]
+		}
+	}
+}

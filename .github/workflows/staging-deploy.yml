@@ -62,3 +62,7 @@ jobs:
         run: bunx wrangler deploy --config apps/server/wrangler.staging.jsonc --env staging
       - name: Deploy web to staging
         run: bunx wrangler deploy --config apps/web/wrangler.staging.jsonc --env staging
+      - name: Verify deployed staging access guard
+        env:
+          PORTAL_WEB_URL: https://store-managment-communal-web-web-staging.abdellahhatouchi.workers.dev
+        run: node scripts/check-deployed-portal.mjs

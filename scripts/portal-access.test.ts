@@ -28,6 +28,11 @@ describe("server portal authorization", () => {
 	test("API errors and malformed success responses fail closed", async () => {
 		for (const response of [
 			new Response(null, { status: 500 }),
+			new Response(null, {
+				status: 302,
+				headers: { Location: "https://untrusted.example.test" },
+			}),
+			new Response(null, { status: 307, headers: { Location: "/login" } }),
 			Response.json({}),
 			Response.json({ result: { data: { user: { id: "" } } } }),
 		]) {
@@ -50,7 +55,7 @@ describe("server portal authorization", () => {
 				called = true;
 				expect(String(url)).toBe(`${origin}/trpc/privateData`);
 				expect(init?.cache).toBe("no-store");
-				expect(init?.redirect).toBe("error");
+				expect(init?.redirect).toBe("manual");
 				expect(new Headers(init?.headers).get("Cookie")).toBe(
 					"synthetic-session",
 				);

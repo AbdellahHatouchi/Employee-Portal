@@ -26,10 +26,12 @@ export async function checkPortalAccess(
 	const response = await transport(url, {
 		headers: { Cookie: cookie },
 		cache: "no-store",
-		redirect: "error",
+		redirect: "manual",
 		signal: AbortSignal.timeout(10000),
 	});
 	if (response.status === 401 || response.status === 403) return false;
+	if (response.status >= 300 && response.status < 400)
+		throw new Error("Portal access verification redirected unexpectedly");
 	if (!response.ok) throw new Error("Portal access verification unavailable");
 	if (!accessResponse.safeParse(await response.json()).success) {
 		throw new Error("Invalid portal access response");

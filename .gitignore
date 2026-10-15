@@ -58,3 +58,6 @@ coverage
 .cache
 tmp
 temp
+
+# Flattened D1 migrations generated for the production workflow
+apps/server/.production-migrations/

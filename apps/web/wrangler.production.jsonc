@@ -1,0 +1,31 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cfs-empoyee-portial",
+	"account_id": "58691d5dbfbbdcce24303f1c3b7ee16b",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-10-14",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"env": {
+		"production": {
+			"name": "cfs-empoyee-portial",
+			"workers_dev": true,
+			"preview_urls": false,
+			"vars": {
+				"NEXT_PUBLIC_SERVER_URL": "https://cfs-empoyee-portial-api.abdellahhatouchi.workers.dev"
+			},
+			"images": {
+				"binding": "IMAGES"
+			},
+			"services": [
+				{
+					"binding": "WORKER_SELF_REFERENCE",
+					"service": "cfs-empoyee-portial"
+				}
+			]
+		}
+	}
+}
