@@ -14,10 +14,14 @@
 		"@store-managment-communal-web/db": "workspace:*",
 		"better-auth": "catalog:",
 		"drizzle-orm": "catalog:",
-		"zod": "catalog:"
+		"zod": "catalog:",
+		"react-email": "6.11.2",
+		"react": "catalog:",
+		"react-dom": "catalog:"
 	},
 	"devDependencies": {
 		"@store-managment-communal-web/config": "workspace:*",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"@types/react": "catalog:"
 	}
 }

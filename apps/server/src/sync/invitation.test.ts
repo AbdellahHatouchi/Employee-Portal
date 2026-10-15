@@ -88,3 +88,31 @@ test("generic reset success without callback and callback failure are not provid
 		}),
 	).rejects.toThrow("synthetic failure");
 });
+
+test("invitation sends bilingual HTML and plain text with the exact original link", async () => {
+	const url =
+		"https://example.test/reset/preview-only?callbackURL=https%3A%2F%2Fexample.test%2Factivate&source=preview";
+	const receipt: PasswordEmailReceipt = { accepted: false };
+	let message: { html: string; text: string } | undefined;
+	await sendPasswordEmail(
+		config,
+		"test@example.test",
+		url,
+		"stable-design-attempt",
+		receipt,
+		async (_input, init) => {
+			message = JSON.parse(String(init?.body));
+			return Response.json({ id: "synthetic-provider-message" });
+		},
+	);
+	expect(receipt.accepted).toBe(true);
+	expect(message?.html).toContain("<!DOCTYPE html");
+	expect(message?.html).toContain("Choisir mon mot de passe");
+	expect(message?.html).toContain("تعيين كلمة المرور");
+	expect(message?.html).toContain('dir="rtl"');
+	expect(message?.html).toContain(url.replaceAll("&", "&amp;"));
+	expect(message?.text).toContain(url);
+	expect(message?.html).toContain("30 minutes");
+	expect(message?.text).toContain("30 minutes");
+	expect(message?.html).not.toMatch(/<script|<img/i);
+});
