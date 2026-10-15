@@ -18,6 +18,8 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      # next.config.ts generates auth/tRPC rewrites during the build.
+      NEXT_PUBLIC_SERVER_URL: https://store-managment-communal-web-api-staging.abdellahhatouchi.workers.dev
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,6 +41,23 @@ jobs:
         run: bun add --cwd apps/web --exact next@16.3.8
       - name: Build web worker
         run: bun run --cwd apps/web build:cloudflare
+      - name: Verify built API routes before deployment
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const origin = new URL(process.env.NEXT_PUBLIC_SERVER_URL);
+          assert.equal(origin.protocol, 'https:');
+          const manifest = JSON.parse(readFileSync('apps/web/.next/routes-manifest.json', 'utf8'));
+          const rewrites = Array.isArray(manifest.rewrites)
+            ? manifest.rewrites
+            : Object.values(manifest.rewrites ?? {}).flat();
+          for (const path of ['/api/auth/:path*', '/trpc/:path*']) {
+            assert(rewrites.some(route => route.source === path && route.destination === `${origin.origin}${path}`), `Missing or incorrect built API route: ${path}`);
+          }
+          console.log('PASS built authentication and tRPC routes');
+          NODE
       - name: Deploy API to staging
         run: bunx wrangler deploy --config apps/server/wrangler.staging.jsonc --env staging
       - name: Deploy web to staging
