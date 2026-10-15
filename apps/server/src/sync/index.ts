@@ -1,3 +1,4 @@
+import { requirePasswordEmailAcceptance } from "@store-managment-communal-web/auth/invitation";
 import { Hono } from "hono";
 import { bodyLimit } from "hono/body-limit";
 import { ENV } from "../env.server";
@@ -24,9 +25,14 @@ export const sync = new Hono<SyncEnv>()
 					.bind(userId, attemptId)
 					.first<{ email: string }>();
 				if (!row) throw new Error("Invitation is no longer eligible");
-				const auth = await createAuth(db, undefined, attemptId);
-				await auth.api.requestPasswordReset({
-					body: { email: row.email, redirectTo: `${ENV.CORS_ORIGIN}/activate` },
+				await requirePasswordEmailAcceptance(async (receipt) => {
+					const auth = await createAuth(db, undefined, attemptId, receipt);
+					await auth.api.requestPasswordReset({
+						body: {
+							email: row.email,
+							redirectTo: `${ENV.CORS_ORIGIN}/activate`,
+						},
+					});
 				});
 			},
 		),

@@ -9,7 +9,11 @@ import {
 import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { eq } from "drizzle-orm";
-import { type EmailConfig, sendPasswordEmail } from "./email";
+import {
+	type EmailConfig,
+	type PasswordEmailReceipt,
+	sendPasswordEmail,
+} from "./email";
 
 export type AuthConfig = EmailConfig & {
 	BETTER_AUTH_URL: string;
@@ -23,6 +27,7 @@ export function createAuth(
 	desktopOrigins: readonly string[] = [],
 	backgroundTask?: (task: Promise<unknown>) => void,
 	mailIdempotencyKey?: string,
+	mailReceipt?: PasswordEmailReceipt,
 ) {
 	return betterAuth({
 		database: drizzleAdapter(database, {
@@ -51,7 +56,13 @@ export function createAuth(
 						email: user.email,
 						expiresAt: Date.now() + 1800000,
 					});
-					await sendPasswordEmail(env, user.email, url, mailIdempotencyKey);
+					await sendPasswordEmail(
+						env,
+						user.email,
+						url,
+						mailIdempotencyKey,
+						mailReceipt,
+					);
 				}
 			},
 		},
