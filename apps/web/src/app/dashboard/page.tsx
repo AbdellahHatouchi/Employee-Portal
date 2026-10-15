@@ -1,4 +1,6 @@
 import { PortalDashboard } from "@/components/portal/dashboard";
-export default function DashboardPage() {
+import { requirePortalAccess } from "@/lib/require-portal-access";
+export default async function DashboardPage() {
+	await requirePortalAccess();
 	return <PortalDashboard />;
 }
